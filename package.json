@@ -11,12 +11,14 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@apollo/client": "^3.10.8",
     "@remix-run/css-bundle": "^2.8.1",
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
     "@remix-run/serve": "^2.8.1",
     "@vanilla-extract/vite-plugin": "^4.0.7",
     "aws-sdk": "^2.1599.0",
+    "graphql": "^16.9.0",
     "isbot": "^4.1.0",
     "mjpeg-consumer": "^2.0.0",
     "node-fetch": "^3.3.2",
