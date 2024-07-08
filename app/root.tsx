@@ -17,12 +17,17 @@ import { useState, useEffect } from 'react';
 import { themes, defaultTheme } from './theme/styles.css';
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const url = new URL(request.url);
-  const domain = url.hostname;
-  console.log('domain', domain)
-  const theme= themes[domain] || defaultTheme;
+  // const url = new URL(request.url);
+  // const domain = url.hostname;
 
- return { theme }
+  const domains = ['localhost', 'base'];
+  const domain = domains[Math.floor(Math.random() * domains.length)];
+  
+  console.log(domain)
+
+  const theme = themes[domain] || defaultTheme;
+
+ return { theme, domain }
 }
 
 
