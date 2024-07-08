@@ -14,12 +14,15 @@ import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 // import { createTheme } from '@vanilla-extract/css';
 import { useState, useEffect } from 'react';
 
-import { fetchTheme } from './styles.server';
+import { themes, defaultTheme } from './theme/styles.css';
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  // replace this with a GraphQL query
-  const theme = await fetchTheme('localhost');
- return { theme };
+  const url = new URL(request.url);
+  const domain = url.hostname;
+  console.log('domain', domain)
+  const theme= themes[domain] || defaultTheme;
+
+ return { theme }
 }
 
 
