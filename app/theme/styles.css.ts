@@ -1,4 +1,6 @@
 import { createThemeContract, globalStyle, createTheme } from '@vanilla-extract/css';
+import localhostTheme from './sites/localhost';
+import baseTheme from './sites/default';
 
 export const vars = createThemeContract({
   color: {
@@ -15,16 +17,8 @@ type ThemeData = {
 };
 
 const themeData: ThemeData = {
-  'localhost' : {
-    color: {
-      brand: 'red',
-    },
-  },
-  'base' : {
-    color: {
-      brand: 'blue',
-    },
-  },
+  'localhost': localhostTheme,
+  'default': baseTheme,
 };
 
 type Themes = {

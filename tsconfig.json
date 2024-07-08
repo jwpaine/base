@@ -6,7 +6,6 @@
     "app/.server/**/*.tsx",
     "app/.client/**/*.ts",
     "app/.client/**/*.tsx"
-    
   ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
@@ -26,7 +25,7 @@
     "paths": {
       "~/*": ["./app/*"],
       "~/theme/*": ["./app/theme/*"],
-      "~/sites/*": ["./app/sites/*"]
+      "~/sites/*": ["./app/theme/sites/*"]
     },
     "noEmit": true
   }
