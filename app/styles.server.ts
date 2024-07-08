@@ -1,5 +1,5 @@
 import { createTheme } from '@vanilla-extract/css';
-import { vars } from './styles.css';
+import { vars } from '~/theme/styles.css';
 // import client from '~/graphql/client';
 // import { GET_THEME } from '~/graphql/queries';
 

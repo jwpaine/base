@@ -14,10 +14,7 @@ import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 // import { createTheme } from '@vanilla-extract/css';
 import { useState, useEffect } from 'react';
 
-import { fetchTheme } from '~/theme/dynamicTheme';
-// const isValidTheme = (domain: string): domain is keyof typeof themes => {
-//   return domain in themes;
-// };
+import { fetchTheme } from './styles.server';
 
 export async function loader({ request }: LoaderFunctionArgs) {
   // replace this with a GraphQL query
