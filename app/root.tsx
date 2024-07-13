@@ -9,7 +9,7 @@ import {
 } from "@remix-run/react";
 import type { MetaFunction } from "@remix-run/node";
 import type { LoaderFunction } from "@remix-run/node";
-import type { LoaderData } from '~/types';
+import type { LoaderData, Theme } from '~/types';
 import { json } from "@remix-run/node";
 import client from '~/graphql/client';
 import { GET_THEME } from '~/graphql/queries';
@@ -25,13 +25,18 @@ export const meta: MetaFunction = () => {
 };
 
 // Loader function to fetch data using Apollo Client
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ request }) => {
+  // Grab domain from the request
+  const url = new URL(request.url);
+  const hostname = url.hostname === 'localhost' ? 'base' : url.hostname;
+  console.log('hostname:', hostname);
   const { data } = await client.query({
     query: GET_THEME,
-    variables: { domain: "domain2" },
+    variables: { domain: hostname },
   });
 
-  const theme = data.theme;
+  // const theme = data.theme;
+  const theme: Theme = data.theme;
 
   return json<LoaderData>({ theme });
 };
