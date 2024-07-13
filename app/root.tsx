@@ -9,16 +9,15 @@ import {
 } from "@remix-run/react";
 import type { MetaFunction } from "@remix-run/node";
 import type { LoaderFunction } from "@remix-run/node";
-import type { LoaderData, Theme } from '~/types';
+import type { LoaderData, Theme } from '~/types'; // Importing Theme type
 import { json } from "@remix-run/node";
-import client from '~/graphql/client';
+import client from '~/graphql/client'; // Import the updated client
 import { GET_THEME } from '~/graphql/queries';
 
 import createCache from "@emotion/cache";
 import { CacheProvider, ThemeProvider } from "@emotion/react";
 import { Global, css } from "@emotion/react";
-import apolloPkg from '@apollo/client';
-const { ApolloProvider } = apolloPkg;
+import { ApolloProvider } from '@apollo/client/react/context/index.js';
 
 export const meta: MetaFunction = () => {
   return [{ title: "New Remix App" }];
@@ -35,14 +34,19 @@ export const loader: LoaderFunction = async ({ request }) => {
     variables: { domain: hostname },
   });
 
-  // const theme = data.theme;
   const theme: Theme = data.theme;
 
+  // Ensure the theme object is valid and properly structured
   return json<LoaderData>({ theme });
 };
 
 export default function App() {
   const { theme } = useLoaderData<LoaderData>();
+
+  // Ensure the theme object is valid before passing to ThemeProvider
+  if (!theme || typeof theme !== 'object') {
+    throw new Error('Invalid theme object');
+  }
 
   return (
     <CacheProvider value={createCache({ key: 'custom' })}>

@@ -1,5 +1,3 @@
-import pkg from '@apollo/client';
-const { ApolloClient, InMemoryCache, HttpLink } = pkg;
 
 // const client = new ApolloClient({
 //   link: new HttpLink({
@@ -7,12 +5,17 @@ const { ApolloClient, InMemoryCache, HttpLink } = pkg;
 //   }),
 //   cache: new InMemoryCache(),
 // });
+// import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+
+import { ApolloClient } from '@apollo/client/core/index.js';
+import { InMemoryCache } from '@apollo/client/cache/index.js';
+import { HttpLink } from '@apollo/client/link/http/index.js';
 
 const client = new ApolloClient({
   link: new HttpLink({
     uri: 'http://localhost:4000/graphql',
   }),
-  cache: new InMemoryCache(), // This can remain for schema awareness, but won't be used with no-cache policy
+  cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {
       fetchPolicy: 'no-cache',
