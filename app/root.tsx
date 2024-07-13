@@ -9,19 +9,20 @@ import {
 } from "@remix-run/react";
 import type { MetaFunction } from "@remix-run/node";
 import type { LoaderFunction } from "@remix-run/node";
-import type { LoaderData, Theme } from '~/types'; // Importing Theme type
+import type { LoaderData, Theme, MetaData } from '~/types'; // Importing Theme type
 import { json } from "@remix-run/node";
 import client from '~/graphql/client'; // Import the updated client
-import { GET_THEME } from '~/graphql/queries';
+import { GET_THEME_META } from '~/graphql/queries';
 
 import createCache from "@emotion/cache";
 import { CacheProvider, ThemeProvider } from "@emotion/react";
 import { Global, css } from "@emotion/react";
 import { ApolloProvider } from '@apollo/client/react/context/index.js';
+import { useEffect } from 'react';
 
-export const meta: MetaFunction = () => {
-  return [{ title: "New Remix App" }];
-};
+// export const meta: MetaFunction = ({ data }) => {
+//   return [{ title: data?.metadata?.title || "New Remix App" }];
+// };
 
 // Loader function to fetch data using Apollo Client
 export const loader: LoaderFunction = async ({ request }) => {
@@ -30,23 +31,28 @@ export const loader: LoaderFunction = async ({ request }) => {
   const hostname = url.hostname === 'localhost' ? 'base' : url.hostname;
   console.log('hostname:', hostname);
   const { data } = await client.query({
-    query: GET_THEME,
+    query: GET_THEME_META,
     variables: { domain: hostname },
   });
 
   const theme: Theme = data.theme;
+  const metadata: MetaData = data.metadata;
 
   // Ensure the theme object is valid and properly structured
-  return json<LoaderData>({ theme });
+  return json<LoaderData>({ theme, metadata });
 };
 
 export default function App() {
-  const { theme } = useLoaderData<LoaderData>();
+  const { theme, metadata} = useLoaderData<LoaderData>();
 
   // Ensure the theme object is valid before passing to ThemeProvider
   if (!theme || typeof theme !== 'object') {
     throw new Error('Invalid theme object');
   }
+
+  useEffect(() => {
+    document.title = metadata.title;
+  }, [metadata.title]);
 
   return (
     <CacheProvider value={createCache({ key: 'custom' })}>
@@ -56,7 +62,8 @@ export default function App() {
             <head>
               <meta charSet="utf-8" />
               <meta name="viewport" content="width=device-width,initial-scale=1" />
-              <Meta />
+              
+              {/* <Meta /> */}
               <Links />
               {typeof document === "undefined" ? "__STYLES__" : null}
             </head>
