@@ -20,6 +20,8 @@ import { Global, css } from "@emotion/react";
 import { ApolloProvider } from '@apollo/client/react/context/index.js';
 import { useEffect } from 'react';
 
+import { Body, Header } from '~/theme/components';
+
 // export const meta: MetaFunction = ({ data }) => {
 //   return [{ title: data?.metadata?.title || "New Remix App" }];
 // };
@@ -30,6 +32,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const hostname = url.hostname === 'localhost' ? 'base' : url.hostname;
   console.log('hostname:', hostname);
+  
   const { data } = await client.query({
     query: GET_THEME_META,
     variables: { domain: hostname },
@@ -39,11 +42,14 @@ export const loader: LoaderFunction = async ({ request }) => {
   const metadata: MetaData = data.metadata;
 
   // Ensure the theme object is valid and properly structured
-  return json<LoaderData>({ theme, metadata });
+ // return json<LoaderData>({ theme, metadata });
+ return json<{ theme: Theme, metadata: MetaData }>({ theme, metadata });
 };
 
 export default function App() {
-  const { theme, metadata} = useLoaderData<LoaderData>();
+  // const { theme, metadata} = useLoaderData<LoaderData>();
+  const { theme, metadata } = useLoaderData<{ theme: Theme, metadata: MetaData }>();
+
 
   // Ensure the theme object is valid before passing to ThemeProvider
   if (!theme || typeof theme !== 'object') {
@@ -67,11 +73,13 @@ export default function App() {
               <Links />
               {typeof document === "undefined" ? "__STYLES__" : null}
             </head>
-            <body>
+            <Body>
+              <Header />
               {/* <Global
                 styles={css`
                   body {
-                    background-color: ${theme.colors.secondary};
+                    padding: 0;
+                    margin: 0;
                   }
                 `}
               /> */}
@@ -79,7 +87,7 @@ export default function App() {
               <ScrollRestoration />
               <Scripts />
               {process.env.NODE_ENV === "development" && <LiveReload />}
-            </body>
+            </Body>
           </html>
         </ThemeProvider>
       </ApolloProvider>

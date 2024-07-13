@@ -4,18 +4,22 @@ import { useEffect, useState } from 'react';
 import { useRouteLoaderData } from "@remix-run/react";
 import { useOutletContext } from "@remix-run/react";
 import { H1 } from "~/theme/components";
+import { MetaData } from "~/types";
 // Define a type for the data you expect from the loader
+
+
 type LoaderData = {
-  domain: string;
+  metadata: MetaData
 };
 
 export default function Index() {
- // const { theme } = useOutletContext<{ theme: Theme }>();
- // const { domain } = useRouteLoaderData("root") as LoaderData;
+  const { metadata } = useRouteLoaderData<LoaderData>("root");
 
   return (
     <main>
-      <H1>asd</H1>
+      <H1>
+        {metadata.title}
+      </H1>
     </main>
   );
 }
