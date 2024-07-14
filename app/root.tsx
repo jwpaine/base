@@ -22,6 +22,8 @@ import { useEffect } from 'react';
 
 import { Body, Header } from '~/theme/components';
 
+import siteData from '~/theme/loader';
+
 // export const meta: MetaFunction = ({ data }) => {
 //   return [{ title: data?.metadata?.title || "New Remix App" }];
 // };
@@ -33,10 +35,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   const hostname = url.hostname === 'localhost' ? 'base' : url.hostname;
   console.log('hostname:', hostname);
   
-  const { data } = await client.query({
-    query: GET_THEME_META,
-    variables: { domain: hostname },
-  });
+  const data = siteData[hostname] || siteData['base'];
+
 
   const theme: Theme = data.theme;
   const metadata: MetaData = data.metadata;
@@ -62,7 +62,7 @@ export default function App() {
 
   return (
     <CacheProvider value={createCache({ key: 'custom' })}>
-      <ApolloProvider client={client}>
+      {/* <ApolloProvider client={client}> */}
         <ThemeProvider theme={theme}>
           <html lang="en">
             <head>
@@ -90,7 +90,7 @@ export default function App() {
             </Body>
           </html>
         </ThemeProvider>
-      </ApolloProvider>
+      {/* </ApolloProvider> */}
     </CacheProvider>
   );
 }
