@@ -22,28 +22,32 @@ import { useEffect } from 'react';
 
 import { Body, Header } from '~/theme/components';
 
-import siteData from '~/theme/loader';
-
-// export const meta: MetaFunction = ({ data }) => {
-//   return [{ title: data?.metadata?.title || "New Remix App" }];
-// };
-
-// Loader function to fetch data using Apollo Client
 export const loader: LoaderFunction = async ({ request }) => {
-  // Grab domain from the request
   const url = new URL(request.url);
-  const hostname = url.hostname === 'localhost' ? 'base' : url.hostname;
+  const hostname = url.hostname;
   console.log('hostname:', hostname);
   
-  const data = siteData[hostname] || siteData['base'];
+  const { data } = await client.query({
+    query: GET_THEME_META,
+    variables: {
+      domain: hostname,
+    },
+  });
 
 
-  const theme: Theme = data.theme;
-  const metadata: MetaData = data.metadata;
+  if (!data || !data.Sites || !data.Sites.docs || data.Sites.docs.length === 0) {
+    throw new Error('No data found for the given domain');
+  }
 
-  // Ensure the theme object is valid and properly structured
- // return json<LoaderData>({ theme, metadata });
- return json<{ theme: Theme, metadata: MetaData }>({ theme, metadata });
+  const siteData = data.Sites.docs[0];
+  const theme: Theme = siteData.theme;
+  const metadata: MetaData = siteData.meta;
+
+  console.log('theme:', theme);
+  console.log('metadata:', metadata)
+
+
+  return json<LoaderData>({ theme, metadata });
 };
 
 export default function App() {
@@ -62,7 +66,7 @@ export default function App() {
 
   return (
     <CacheProvider value={createCache({ key: 'custom' })}>
-      {/* <ApolloProvider client={client}> */}
+      <ApolloProvider client={client}>
         <ThemeProvider theme={theme}>
           <html lang="en">
             <head>
@@ -90,7 +94,7 @@ export default function App() {
             </Body>
           </html>
         </ThemeProvider>
-      {/* </ApolloProvider> */}
+      </ApolloProvider>
     </CacheProvider>
   );
 }
