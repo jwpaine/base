@@ -20,3 +20,28 @@ export const GET_THEME_META = gql`
     }
   }
 `;
+
+export const GET_HOME_CONTENT = gql`
+  query GetHomeContent($domain: String!) {
+    Sites(where: { domainName: { equals: $domain } }) {
+      docs {
+        domainName
+        pages {
+          home {
+            __typename
+            ... on Content {
+              elements {
+                __typename
+                ... on Button {
+                  text
+                  link
+                  buttonType
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
