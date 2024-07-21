@@ -1,3 +1,4 @@
+// types.ts
 export type Theme = {
   colors: {
     primary: string;
@@ -14,23 +15,25 @@ export type MetaData = {
 export type ButtonElement = {
   __typename: 'Button';
   text: string;
-  link: string;
+  link: string | null;
   buttonType: 'primary' | 'secondary';
 };
 
 export type H1Element = {
   __typename: 'H1';
   text: string;
+  color?: string; // Add color property
 };
 
-export type PageElement = ButtonElement | H1Element;
-
-export type PageContent = {
-  home: Array<{
-    __typename: 'Content';
-    elements: PageElement[];
-  }>;
+export type ContainerElement = {
+  __typename: 'Container';
+  background: string;
+  elements: PageElement[];
 };
+
+export type PageElement = ButtonElement | H1Element | ContainerElement;
+
+export type PageContent = Array<ContainerElement>;
 
 export type LoaderData = {
   theme: Theme;

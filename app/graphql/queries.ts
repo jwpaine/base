@@ -29,13 +29,19 @@ export const GET_HOME_CONTENT = gql`
         pages {
           home {
             __typename
-            ... on Content {
+            ... on Container {
+              background
               elements {
                 __typename
                 ... on Button {
                   text
                   link
                   buttonType
+                }
+                __typename
+                ... on H1 {
+                  text
+                  color
                 }
               }
             }
