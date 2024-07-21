@@ -17,6 +17,7 @@ type H1Props = {
 type ContainerProps = {
   theme?: Theme;
   background: string;
+  height: string;
 };
 
 export const Body = styled.body`
@@ -30,12 +31,20 @@ export const Header = styled.header`
 `;
 
 export const Container = styled.div<ContainerProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: ${(props) => props.background || 'none'};
+  background-size: cover;
+  min-height: 400px;
+
 `;
 
 export const H1 = styled.h1<H1Props>`
-  font-size: 27px;
+  font-size: 42px;
   color: ${(props) => props.color ? props.color : props.theme?.colors.primary};
+  margin: 0;
+  padding: 0;
 `;
 
 export const Button = styled.button<ButtonProps>`
@@ -44,6 +53,7 @@ export const Button = styled.button<ButtonProps>`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  
   background-color: ${(props) =>
     props.buttonType === 'primary'
       ? props.theme?.colors.primary

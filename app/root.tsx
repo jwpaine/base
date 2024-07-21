@@ -47,7 +47,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   console.log('metadata:', metadata)
 
 
-  return json<LoaderData>({ theme, metadata });
+  return json({ theme, metadata });
 };
 
 export default function App() {
@@ -79,14 +79,15 @@ export default function App() {
             </head>
             <Body>
               <Header />
-              {/* <Global
+              <Global
                 styles={css`
                   body {
                     padding: 0;
                     margin: 0;
                   }
+                  
                 `}
-              /> */}
+              />
               <Outlet />
               <ScrollRestoration />
               <Scripts />
