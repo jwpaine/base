@@ -43,6 +43,11 @@ export const GET_HOME_CONTENT = gql`
                   text
                   color
                 }
+                __typename
+                ... on P {
+                  text
+                  color
+                }
               }
             }
           }

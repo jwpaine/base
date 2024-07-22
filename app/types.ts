@@ -19,8 +19,8 @@ export type ButtonElement = {
   buttonType: 'primary' | 'secondary';
 };
 
-export type H1Element = {
-  __typename: 'H1';
+export type TextElement = {
+  __typename: 'H1' | 'P';
   text: string;
   color?: string; // Add color property
 };
@@ -31,7 +31,7 @@ export type ContainerElement = {
   elements: PageElement[];
 };
 
-export type PageElement = ButtonElement | H1Element | ContainerElement;
+export type PageElement = ButtonElement | TextElement | ContainerElement;
 
 export type PageContent = Array<ContainerElement>;
 

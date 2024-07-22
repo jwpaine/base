@@ -2,8 +2,8 @@
 import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Container, H1, Button } from "~/theme/components";
-import type { MetaData, LoaderData, PageContent, PageElement, ButtonElement, H1Element, ContainerElement } from "~/types";
+import { Container, H1, Button, P } from "~/theme/components";
+import type { MetaData, LoaderData, PageContent, PageElement, ButtonElement, TextElement, ContainerElement } from "~/types";
 import client from '~/graphql/client';
 import { GET_HOME_CONTENT } from '~/graphql/queries';
 
@@ -35,6 +35,7 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   Button: Button,
   H1: H1,
   Container: Container,
+  P: P,
 };
 
 const renderPageContent = (pageContent: PageContent) => {
@@ -51,7 +52,10 @@ const renderPageContent = (pageContent: PageContent) => {
         return null;
       }
 
-      switch(element.__typename) {
+      
+      console.log('element:', element.__typename);
+      switch (element.__typename) {
+        
         case 'Container': {
           const containerElement = element as ContainerElement;
           return (
@@ -61,12 +65,16 @@ const renderPageContent = (pageContent: PageContent) => {
           );
         }
         case 'Button': {
-          const buttonElement = element as ButtonElement;
-          return <Component key={index} {...buttonElement}>{buttonElement.text}</Component>;
+          const { text, ...rest } = element as ButtonElement;
+          return <Component key={index} {...rest}>{text}</Component>;
         }
         case 'H1': {
-          const h1Element = element as H1Element;
-          return <Component key={index} {...h1Element}>{h1Element.text}</Component>;
+          const { text, ...rest } = element as TextElement;
+          return <Component key={index} {...rest}>{text}</Component>;
+        }
+        case 'P': {
+          const { text, ...rest } = element as TextElement;
+          return <Component key={index} {...rest}>{text}</Component>;
         }
         default: return "Unknown element type";
       }

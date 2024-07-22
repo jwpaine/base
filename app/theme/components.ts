@@ -8,7 +8,7 @@ type ButtonProps = {
   link: string;
 };
 
-type H1Props = {
+type TextProps = {
   theme?: Theme;
   text: string;
   color: string;
@@ -37,15 +37,23 @@ export const Container = styled.div<ContainerProps>`
   background: ${(props) => props.background || 'none'};
   background-size: cover;
   min-height: 400px;
-
+  margin: 0px;
+  padding: 0px;
 `;
 
-export const H1 = styled.h1<H1Props>`
+export const H1 = styled.h1<TextProps>`
   font-size: 42px;
   color: ${(props) => props.color ? props.color : props.theme?.colors.primary};
   margin: 0;
   padding: 0;
 `;
+
+export const P = styled.p<TextProps>`
+  font-size: 24px;
+  color: ${(props) => props.color ? props.color : props.theme?.colors.primary};
+  margin: 0;
+  padding: 0;
+  `;
 
 export const Button = styled.button<ButtonProps>`
   font-size: 16px;
