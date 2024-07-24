@@ -2,7 +2,7 @@
 import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Container, H1, Button, P } from "~/theme/components";
+import { Container, H1, Button, P, Main } from "~/theme/components";
 import type { MetaData, LoaderData, PageContent, PageElement, ButtonElement, TextElement, ContainerElement } from "~/types";
 import client from '~/graphql/client';
 import { GET_HOME_CONTENT } from '~/graphql/queries';
@@ -82,7 +82,7 @@ const renderPageContent = (pageContent: PageContent) => {
   };
 
   return (
-    <main>
+    <Main>
       {pageContent.map((container, index) => {
         const ContainerComponent = componentMap[container.__typename];
         return (
@@ -91,7 +91,7 @@ const renderPageContent = (pageContent: PageContent) => {
           </ContainerComponent>
         );
       })}
-    </main>
+    </Main>
   );
 };
 

@@ -31,6 +31,11 @@ export const GET_HOME_CONTENT = gql`
             __typename
             ... on Container {
               background
+              minHeight
+              minWidth
+              maxWidth
+              margin
+              padding
               elements {
                 __typename
                 ... on Button {
@@ -42,11 +47,13 @@ export const GET_HOME_CONTENT = gql`
                 ... on H1 {
                   text
                   color
+                  fontSize
                 }
                 __typename
                 ... on P {
                   text
                   color
+                  fontSize
                 }
               }
             }

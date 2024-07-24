@@ -5,19 +5,24 @@ type ButtonProps = {
   theme?: Theme;
   buttonType: 'primary' | 'secondary';
   text: string;
-  link: string;
+  link?: string | null; // Make link optional to handle null
 };
 
 type TextProps = {
   theme?: Theme;
   text: string;
-  color: string;
+  color?: string; // Add color property as optional
+  fontSize?: string;
 };
 
 type ContainerProps = {
   theme?: Theme;
-  background: string;
-  height: string;
+  background?: string;
+  minHeight?: string;
+  minWidth?: string;
+  maxWidth?: string;
+  margin?: string;
+  padding?: string;
 };
 
 export const Body = styled.body`
@@ -36,24 +41,30 @@ export const Container = styled.div<ContainerProps>`
   align-items: center;
   background: ${(props) => props.background || 'none'};
   background-size: cover;
-  min-height: 400px;
-  margin: 0px;
-  padding: 0px;
+  min-height: ${(props) => props.minHeight || 'none'};
+  padding: ${(props) => props.padding || '0'};
+  margin: ${(props) => props.margin || '0'};
+  min-width: ${(props) => props.minWidth || '0'};
+  max-width: ${(props) => props.maxWidth || 'none'};
+`;
+
+export const Main = styled(Container)<ContainerProps>`
+  flex-direction: column;
 `;
 
 export const H1 = styled.h1<TextProps>`
-  font-size: 42px;
   color: ${(props) => props.color ? props.color : props.theme?.colors.primary};
   margin: 0;
   padding: 0;
+  font-Size: ${(props) => props.fontSize || '42px'};
 `;
 
 export const P = styled.p<TextProps>`
-  font-size: 24px;
   color: ${(props) => props.color ? props.color : props.theme?.colors.primary};
   margin: 0;
   padding: 0;
-  `;
+  font-Size: ${(props) => props.fontSize || '18px'};
+`;
 
 export const Button = styled.button<ButtonProps>`
   font-size: 16px;
@@ -76,6 +87,3 @@ export const Button = styled.button<ButtonProps>`
     opacity: 0.6;
   }
 `;
-
-
-
