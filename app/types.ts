@@ -2,7 +2,7 @@
 export type Theme = {
   colors: {
     primary: string;
-    secondary?: string | null; // Make secondary optional to handle null more gracefully
+    secondary?: string | null;
   };
 };
 
@@ -12,28 +12,38 @@ export type MetaData = {
   title: string;
 };
 
-export type ButtonElement = {
-  __typename: 'Button';
-  text: string;
-  link?: string | null; // Make link optional to handle null
-  buttonType: 'primary' | 'secondary';
-};
-
-export type TextElement = {
-  __typename: 'H1' | 'P';
-  text: string;
-  color?: string; // Add color property as optional
-  fontSize?: string;
-};
-
-export type ContainerElement = {
-  __typename: 'Container';
-  background?: string; // Make background optional
+export type Style = {
+  background?: string;
   minHeight?: string;
   minWidth?: string;
   maxWidth?: string;
   margin?: string;
   padding?: string;
+  color?: string;
+  textSize?: string;
+};
+
+export type ButtonElement = {
+  __typename: 'Button';
+  type: 'Button';
+  text: string;
+  link?: string | null;
+  buttonType: 'primary' | 'secondary';
+  style?: Style;
+};
+
+export type TextElement = {
+  __typename: 'H1' | 'P';
+  type: 'H1' | 'P';
+  text: string;
+  style?: Style;
+};
+
+export type ContainerElement = {
+  __typename: 'Container';
+  type: 'Container';
+  text?: string;
+  style?: Style;
   elements: PageElement[];
 };
 

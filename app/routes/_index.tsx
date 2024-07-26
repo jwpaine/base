@@ -31,6 +31,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json({ pageContent, metadata });
 };
 
+
 const componentMap: Record<string, React.ComponentType<any>> = {
   Button: Button,
   H1: H1,
@@ -39,61 +40,61 @@ const componentMap: Record<string, React.ComponentType<any>> = {
 };
 
 const renderPageContent = (pageContent: PageContent) => {
+  console.log("rendering page content")
   if (!pageContent) {
     console.error('Invalid page content:', pageContent);
     return <main>No content available</main>;
   }
 
   const renderElements = (elements: PageElement[]) => {
+    if (!elements || elements.length === 0) {
+      console.error('No sub elements');
+      return null;
+    }
+
     return elements.map((element, index) => {
-      const Component = componentMap[element.__typename];
+      console.log('element:', element.type);
+      const Component = componentMap[element.type];
       if (!Component) {
-        console.error('Unknown component type:', element.__typename);
+        console.error('Unknown component type:', element.type);
         return null;
       }
 
-      
-      console.log('element:', element.__typename);
-      switch (element.__typename) {
-        
-        case 'Container': {
-          const containerElement = element as ContainerElement;
-          return (
-            <Component key={index} {...containerElement}>
-              {renderElements(containerElement.elements)}
-            </Component>
-          );
-        }
-        case 'Button': {
-          const { text, ...rest } = element as ButtonElement;
-          return <Component key={index} {...rest}>{text}</Component>;
-        }
-        case 'H1': {
-          const { text, ...rest } = element as TextElement;
-          return <Component key={index} {...rest}>{text}</Component>;
-        }
-        case 'P': {
-          const { text, ...rest } = element as TextElement;
-          return <Component key={index} {...rest}>{text}</Component>;
-        }
-        default: return "Unknown element type";
-      }
+      const { style = {}, ...rest } = element;
+
+      // Spread style properties directly into the component props
+      return (
+        <Component key={index} {...style}>
+          {renderElements((rest as ContainerElement).elements)}
+          {rest.text}
+        </Component>
+      );
     });
   };
 
   return (
     <Main>
-      {pageContent.map((container, index) => {
-        const ContainerComponent = componentMap[container.__typename];
+      {pageContent.map((element, index) => {
+        const Component = componentMap[element.type];
+        if (!Component) {
+          console.error('Unknown container type:', element.type);
+          return null;
+        }
+
+        const { style = {}, elements: childElements, ...rest } = element;
+
         return (
-          <ContainerComponent key={index} {...container}>
-            {renderElements(container.elements)}
-          </ContainerComponent>
+          <Component key={index} {...style}>
+            {renderElements(childElements)}
+            {rest.text}
+          </Component>
         );
       })}
     </Main>
   );
 };
+
+
 
 export default function Index() {
   const { metadata } = useRouteLoaderData<LoaderData>("root") || { metadata: { title: "Default Title" } };

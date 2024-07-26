@@ -22,38 +22,40 @@ export const GET_THEME_META = gql`
 `;
 
 export const GET_HOME_CONTENT = gql`
-  query GetHomeContent($domain: String!) {
-    Sites(where: { domainName: { equals: $domain } }) {
-      docs {
-        domainName
-        pages {
-          home {
-            __typename
-            ... on Container {
+query GetHomeContent($domain: String!) {
+  Sites(where: { domainName: { equals: $domain } }) {
+    docs {
+      domainName
+      pages {
+        home {
+          __typename
+          ... on Element {
+            type
+            text
+            style {
               background
               minHeight
               minWidth
               maxWidth
               margin
               padding
-              elements {
-                __typename
-                ... on Button {
-                  text
-                  link
-                  buttonType
-                }
-                __typename
-                ... on H1 {
-                  text
+              color
+              textSize
+            }
+            elements {
+              __typename
+              ... on SubElement {
+                type
+                text
+                style {
+                  background
+                  minHeight
+                  minWidth
+                  maxWidth
+                  margin
+                  padding
                   color
-                  fontSize
-                }
-                __typename
-                ... on P {
-                  text
-                  color
-                  fontSize
+                  textSize
                 }
               }
             }
@@ -62,4 +64,49 @@ export const GET_HOME_CONTENT = gql`
       }
     }
   }
+}
+
 `
+
+// export const GET_HOME_CONTENT = gql`
+//   query GetHomeContent($domain: String!) {
+//     Sites(where: { domainName: { equals: $domain } }) {
+//       docs {
+//         domainName
+//         pages {
+//           home {
+//             __typename
+//             ... on Container {
+//               background
+//               minHeight
+//               minWidth
+//               maxWidth
+//               margin
+//               padding
+//               elements {
+//                 __typename
+//                 ... on Button {
+//                   text
+//                   link
+//                   buttonType
+//                 }
+//                 __typename
+//                 ... on H1 {
+//                   text
+//                   color
+//                   fontSize
+//                 }
+//                 __typename
+//                 ... on P {
+//                   text
+//                   color
+//                   fontSize
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `
