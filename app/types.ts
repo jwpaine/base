@@ -20,7 +20,7 @@ export type Style = {
   margin?: string;
   padding?: string;
   color?: string;
-  textSize?: string;
+  fontSize?: string;
 };
 
 export type ButtonElement = {
@@ -39,17 +39,18 @@ export type TextElement = {
   style?: Style;
 };
 
-export type ContainerElement = {
+export type PageElement = {
   __typename: 'Container';
-  type: 'Container';
+  type?: string;
   text?: string;
   style?: Style;
+  
   elements: PageElement[];
 };
 
-export type PageElement = ButtonElement | TextElement | ContainerElement;
 
-export type PageContent = Array<ContainerElement>;
+
+export type PageContent = Array<PageElement>;
 
 export type LoaderData = {
   theme?: Theme;

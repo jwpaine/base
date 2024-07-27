@@ -40,7 +40,7 @@ query GetHomeContent($domain: String!) {
               margin
               padding
               color
-              textSize
+              fontSize
             }
             elements {
               __typename
@@ -55,7 +55,7 @@ query GetHomeContent($domain: String!) {
                   margin
                   padding
                   color
-                  textSize
+                  fontSize
                 }
               }
             }

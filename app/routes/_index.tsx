@@ -2,8 +2,8 @@
 import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Container, H1, Button, P, Main } from "~/theme/components";
-import type { MetaData, LoaderData, PageContent, PageElement, ButtonElement, TextElement, ContainerElement } from "~/types";
+import { H1, Main } from "~/theme/components";
+import type { MetaData, LoaderData, PageContent, PageElement, ButtonElement, TextElement } from "~/types";
 import client from '~/graphql/client';
 import { GET_HOME_CONTENT } from '~/graphql/queries';
 
@@ -31,16 +31,12 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json({ pageContent, metadata });
 };
 
-
 const componentMap: Record<string, React.ComponentType<any>> = {
-  Button: Button,
   H1: H1,
-  Container: Container,
-  P: P,
 };
 
 const renderPageContent = (pageContent: PageContent) => {
-  console.log("rendering page content")
+  console.log("rendering page content");
   if (!pageContent) {
     console.error('Invalid page content:', pageContent);
     return <main>No content available</main>;
@@ -53,7 +49,11 @@ const renderPageContent = (pageContent: PageContent) => {
     }
 
     return elements.map((element, index) => {
-      console.log('element:', element.type);
+      if (!element || !element.type) {
+        console.error('Invalid element:', element);
+        return null;
+      }
+
       const Component = componentMap[element.type];
       if (!Component) {
         console.error('Unknown component type:', element.type);
@@ -65,7 +65,7 @@ const renderPageContent = (pageContent: PageContent) => {
       // Spread style properties directly into the component props
       return (
         <Component key={index} {...style}>
-          {renderElements((rest as ContainerElement).elements)}
+          {renderElements((rest as PageElement).elements)}
           {rest.text}
         </Component>
       );
@@ -75,6 +75,11 @@ const renderPageContent = (pageContent: PageContent) => {
   return (
     <Main>
       {pageContent.map((element, index) => {
+        if (!element || !element.type) {
+          console.error('Invalid container element:', element);
+          return null;
+        }
+
         const Component = componentMap[element.type];
         if (!Component) {
           console.error('Unknown container type:', element.type);
@@ -93,8 +98,6 @@ const renderPageContent = (pageContent: PageContent) => {
     </Main>
   );
 };
-
-
 
 export default function Index() {
   const { metadata } = useRouteLoaderData<LoaderData>("root") || { metadata: { title: "Default Title" } };
