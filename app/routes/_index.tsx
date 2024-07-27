@@ -2,7 +2,7 @@
 import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { H1, Main } from "~/theme/components";
+import { H1, Container, Main } from "~/theme/components";
 import type { MetaData, LoaderData, PageContent, PageElement, ButtonElement, TextElement } from "~/types";
 import client from '~/graphql/client';
 import { GET_HOME_CONTENT } from '~/graphql/queries';
@@ -33,6 +33,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 const componentMap: Record<string, React.ComponentType<any>> = {
   H1: H1,
+  Container: Container
 };
 
 const renderPageContent = (pageContent: PageContent) => {

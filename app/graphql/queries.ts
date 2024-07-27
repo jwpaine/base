@@ -57,6 +57,23 @@ query GetHomeContent($domain: String!) {
                   color
                   fontSize
                 }
+                elements {
+                  __typename
+                  ... on TertiaryElement {
+                    type
+                    text
+                    style {
+                      background
+                      minHeight
+                      minWidth
+                      maxWidth
+                      margin
+                      padding
+                      color
+                      fontSize
+                    }
+                  }
+                }
               }
             }
           }

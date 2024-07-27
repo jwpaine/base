@@ -55,12 +55,18 @@ const attributes = (props: ElementProps) => `
   ${props.fontSize ? `font-size: ${props.fontSize};` : ''}
 `;
 
-
-
-
+export const Container = styled.div<ElementProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${props => attributes(props)}
+`;
 
 export const H1 = styled.h1<ElementProps>`
   ${props => !props.fontSize && 'font-size: 42px;'}
+  ${props => !props.margin && 'margin: 0;'}
+  ${props => !props.padding && 'padding: 0;'}
+
   ${props => attributes(props)} 
   
   `
