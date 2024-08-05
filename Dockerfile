@@ -1,4 +1,4 @@
-# Base image for building the application
+# Use a Debian-based Node.js image for better compatibility with prebuilt binaries
 FROM node:18.17-bullseye-slim as base
 
 # Set the working directory
@@ -7,7 +7,13 @@ WORKDIR /home/node/app
 # Install necessary global tools
 RUN npm install -g cross-env nodemon
 
-# Copy package.json and package-lock.json to install dependencies
+# Builder stage for building the application
+FROM base as builder
+
+# Set the working directory
+WORKDIR /home/node/app
+
+# Copy package.json and package-lock.json for caching dependencies
 COPY package.json package-lock.json ./
 
 # Install all dependencies, including development dependencies
@@ -16,21 +22,14 @@ RUN npm install
 # Copy the application source code
 COPY . .
 
-# Builder stage for building the application
-FROM base as builder
-
-# Set the working directory
-WORKDIR /home/node/app
-
-# Build the application using the remix and vite build scripts
+# Build the application
 RUN npm run build
 
 # Runtime stage for running the application
-FROM node:18.17-bullseye-slim as runtime
+FROM base as runtime
 
 # Set environment variables for production
 ENV NODE_ENV=production
-ENV PAYLOAD_CONFIG_PATH=build/payload.config.js
 
 # Set the working directory
 WORKDIR /home/node/app
@@ -42,10 +41,11 @@ COPY package.json package-lock.json ./
 RUN npm install --production
 
 # Copy built artifacts from the builder stage
+COPY --from=builder /home/node/app/dist ./dist
 COPY --from=builder /home/node/app/build ./build
 
 # Expose the application port
 EXPOSE 3000
 
-# Start the application
-CMD ["node", "build/server/index.js"]
+# Start the application using the start script
+CMD ["npm", "run", "start"]
