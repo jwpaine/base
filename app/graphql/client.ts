@@ -13,7 +13,7 @@ import { HttpLink } from '@apollo/client/link/http/index.js';
 
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: "http://payload.dreamfriday.com/api/graphql"
+    uri: 'http://payload.dreamfriday.com/api/graphql'
   }),
   cache: new InMemoryCache(),
   defaultOptions: {
@@ -28,5 +28,7 @@ const client = new ApolloClient({
     },
   },
 });
+
+console.log("Apollo Client Config:", client);
 
 export default client;
