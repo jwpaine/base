@@ -1,5 +1,5 @@
-# Use a Debian-based Node.js image for better compatibility with prebuilt binaries
-FROM node:18.17-bullseye-slim as base
+# Use a Debian-based Node.js 20 image for better compatibility with prebuilt binaries
+FROM node:20-bullseye-slim as base
 
 # Set the working directory
 WORKDIR /home/node/app
