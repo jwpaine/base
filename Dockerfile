@@ -38,7 +38,8 @@ WORKDIR /home/node/app
 COPY package.json package-lock.json ./
 
 # Install only production dependencies
-RUN npm install --production
+RUN npm install 
+# --production
 
 # Copy built artifacts from the builder stage
 COPY --from=builder /home/node/app/build ./build
