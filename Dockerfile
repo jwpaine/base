@@ -41,7 +41,6 @@ COPY package.json package-lock.json ./
 RUN npm install --production
 
 # Copy built artifacts from the builder stage
-COPY --from=builder /home/node/app/dist ./dist
 COPY --from=builder /home/node/app/build ./build
 
 # Expose the application port
