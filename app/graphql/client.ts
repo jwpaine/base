@@ -13,7 +13,7 @@ import { HttpLink } from '@apollo/client/link/http/index.js';
 
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: process.env.PAYLOAD_URI
+    uri: "http://payload.dreamfriday.com/api/graphql"
   }),
   cache: new InMemoryCache(),
   defaultOptions: {

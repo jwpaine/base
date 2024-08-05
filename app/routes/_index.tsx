@@ -10,7 +10,6 @@ import { GET_HOME_CONTENT } from '~/graphql/queries';
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const hostname = url.hostname;
-  console.log('hostname:', hostname);
 
   const { data } = await client.query({
     query: GET_HOME_CONTENT,
