@@ -3,13 +3,14 @@ import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { H1, Container, Main } from "~/theme/components";
-import type { MetaData, LoaderData, PageContent, PageElement, ButtonElement, TextElement } from "~/types";
+import type { MetaData, LoaderData, PageContent, PageElement} from "~/types";
 import client from '~/graphql/client';
 import { GET_HOME_CONTENT } from '~/graphql/queries';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
-  const hostname = url.hostname;
+  const hostname = url.hostname == 'localhost' ? 'dreamfriday.com' : url.hostname;
+
 
   const { data } = await client.query({
     query: GET_HOME_CONTENT,
@@ -44,7 +45,7 @@ const renderPageContent = (pageContent: PageContent) => {
 
   const renderElements = (elements: PageElement[]) => {
     if (!elements || elements.length === 0) {
-      console.error('No sub elements');
+      console.log('No sub elements');
       return null;
     }
 
@@ -60,11 +61,11 @@ const renderPageContent = (pageContent: PageContent) => {
         return null;
       }
 
-      const { style = {}, ...rest } = element;
+      const { styling = {}, ...rest } = element;
 
       // Spread style properties directly into the component props
       return (
-        <Component key={index} {...style}>
+        <Component key={index} {...styling}>
           {renderElements((rest as PageElement).elements)}
           {rest.text}
         </Component>
@@ -86,10 +87,10 @@ const renderPageContent = (pageContent: PageContent) => {
           return null;
         }
 
-        const { style = {}, elements: childElements, ...rest } = element;
+        const { styling = {}, elements: childElements, ...rest } = element;
 
         return (
-          <Component key={index} {...style}>
+          <Component key={index} {...styling}>
             {renderElements(childElements)}
             {rest.text}
           </Component>

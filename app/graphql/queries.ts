@@ -32,46 +32,19 @@ query GetHomeContent($domain: String!) {
           ... on Element {
             type
             text
-            style {
-              background
-              minHeight
-              minWidth
-              maxWidth
-              margin
-              padding
-              color
-              fontSize
-            }
+            styling
             elements {
               __typename
               ... on SubElement {
                 type
                 text
-                style {
-                  background
-                  minHeight
-                  minWidth
-                  maxWidth
-                  margin
-                  padding
-                  color
-                  fontSize
-                }
+                styling
                 elements {
                   __typename
                   ... on TertiaryElement {
                     type
                     text
-                    style {
-                      background
-                      minHeight
-                      minWidth
-                      maxWidth
-                      margin
-                      padding
-                      color
-                      fontSize
-                    }
+                    styling
                   }
                 }
               }

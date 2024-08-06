@@ -24,7 +24,7 @@ import { Body, Header } from '~/theme/components';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
-  const hostname = url.hostname;
+  const hostname = url.hostname == 'localhost' ? 'dreamfriday.com' : url.hostname;
   console.log('hostname:', hostname);
   
   const { data } = await client.query({

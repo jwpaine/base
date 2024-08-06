@@ -15,19 +15,19 @@ type TextProps = {
   fontSize?: string;
 };
 
-type ElementProps = {
-  theme?: Theme;
-  type?: 'H1' | 'Div';
-  background?: string;
-  minHeight?: string;
-  minWidth?: string;
-  maxWidth?: string;
-  margin?: string;
-  padding?: string;
-  color?: string;
-  fontSize?: string;
-  text?: string;
-};
+// type ElementProps = {
+//   theme?: Theme;
+//   type?: 'H1' | 'Div';
+//   background?: string;
+//   minHeight?: string;
+//   minWidth?: string;
+//   maxWidth?: string;
+//   margin?: string;
+//   padding?: string;
+//   color?: string;
+//   fontSize?: string;
+//   text?: string;
+// };
 
 export const Body = styled.body`
   padding: 0px;
@@ -40,34 +40,44 @@ export const Header = styled.header`
 `;
 
 
-export const Main = styled.main<ElementProps>`
-  flex-direction: column;
-`;
 
-const attributes = (props: ElementProps) => `
-  ${props.background ? `background: ${props.background};` : ''}
-  ${props.minHeight ? `min-height: ${props.minHeight};` : ''}
-  ${props.minWidth ? `min-width: ${props.minWidth};` : ''}
-  ${props.maxWidth ? `max-width: ${props.maxWidth};` : ''}
-  ${props.margin ? `margin: ${props.margin};` : ''}
-  ${props.padding ? `padding: ${props.padding};` : ''}
-  ${props.color ? `color: ${props.color};` : props.theme ? `color: ${props.theme.colors.primary};` : ''}
-  ${props.fontSize ? `font-size: ${props.fontSize};` : ''}
-`;
+
+export interface ElementProps {
+  children?: React.ReactNode; // Allow React elements as children
+  [key: string]: string | undefined | React.ReactNode; // Extend index signature to accommodate React nodes
+}
+
+
+const attributes = (props: ElementProps): string => {
+  let styles = '';
+
+  // Iterate over each property in the props
+  Object.entries(props).forEach(([key, value]) => {
+    if (value) {
+      // Append the CSS style for each kebab-case key
+      styles += `${key}: ${value};\n`;
+    }
+  });
+
+  return styles;
+};
 
 export const Container = styled.div<ElementProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  ${props => attributes(props)}
+  ${(props) => attributes(props)}
 `;
 
 export const H1 = styled.h1<ElementProps>`
-  ${props => !props.fontSize && 'font-size: 42px;'}
-  ${props => !props.margin && 'margin: 0;'}
-  ${props => !props.padding && 'padding: 0;'}
+  ${(props) => !props['font-size'] && 'font-size: 42px;'}
+  ${(props) => !props.margin && 'margin: 0;'}
+  ${(props) => !props.padding && 'padding: 0;'}
 
-  ${props => attributes(props)} 
-  
-  `
+  ${(props) => attributes(props)} 
+`;
 
+export const Main = styled.main<ElementProps>`
+  display: flex;
+  flex-direction: column;
+`;

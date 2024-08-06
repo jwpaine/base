@@ -1,0 +1,109 @@
+/* General Styles */
+body, html {
+    background-color: #87ceeb; /* Sky Blue */
+    font-family: 'Comic Sans MS', sans-serif; /* Fun Font */
+    color: #2c3e50; /* Darker Text for Contrast */
+}
+
+/* Sidebar */
+.payload__sidebar {
+    background-color: #87ceeb; /* Sky Blue */
+    border-right: 2px solid #ffffff;
+    box-shadow: 3px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar Header */
+.payload__sidebar-header {
+    background-color: #ffffff; /* Cloud White */
+    padding: 20px;
+    border-bottom: 2px solid #87ceeb;
+}
+
+/* Sidebar Links */
+.payload__nav-link {
+    color: #2c3e50;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.payload__nav-link:hover {
+    background-color: #f0f8ff; /* Light Cloud */
+    color: #2980b9;
+}
+
+/* Buttons */
+.payload__button--primary {
+    background-color: #ffffff; /* Cloud White */
+    color: #87ceeb; /* Sky Blue */
+    border: 2px solid #87ceeb;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.payload__button--primary:hover {
+    background-color: #87ceeb;
+    color: #ffffff;
+}
+
+/* Header */
+.payload__header {
+    background-color: #87ceeb; /* Sky Blue */
+    color: #ffffff;
+    border-bottom: 2px solid #ffffff;
+    padding: 10px 20px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Inputs */
+.payload__input, .payload__textarea {
+    border: 2px solid #ffffff;
+    background-color: #f0f8ff; /* Light Cloud */
+    transition: border-color 0.3s;
+}
+
+.payload__input:focus, .payload__textarea:focus {
+    border-color: #87ceeb;
+}
+
+/* Tables */
+.payload__table {
+    background-color: #ffffff;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 2px solid #87ceeb;
+}
+
+.payload__table th, .payload__table td {
+    padding: 10px;
+    border: 1px solid #87ceeb;
+}
+
+.payload__table th {
+    background-color: #f0f8ff; /* Light Cloud */
+}
+
+.payload__table td {
+    background-color: #ffffff;
+}
+
+/* Modals */
+.payload__modal {
+    background-color: #f0f8ff; /* Light Cloud */
+    border: 2px solid #87ceeb;
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Notifications */
+.payload__notification {
+    background-color: #ffeb3b; /* Sunny Yellow */
+    color: #2c3e50;
+    border-left: 5px solid #87ceeb;
+}
+
+/* Footer */
+.payload__footer {
+    background-color: #87ceeb; /* Sky Blue */
+    color: #ffffff;
+    padding: 10px 20px;
+    text-align: center;
+    border-top: 2px solid #ffffff;
+}
