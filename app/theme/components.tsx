@@ -35,8 +35,8 @@ export const Body = styled.body`
 `;
 
 export const Header = styled.header`
-  height: 60px;
-  border-bottom: 1px solid #ccc;
+  display: flex;
+  flex-direction: row
 `;
 
 
@@ -73,7 +73,6 @@ export const H1 = styled.h1<ElementProps>`
   ${(props) => !props['font-size'] && 'font-size: 42px;'}
   ${(props) => !props.margin && 'margin: 0;'}
   ${(props) => !props.padding && 'padding: 0;'}
-
   ${(props) => attributes(props)} 
 `;
 

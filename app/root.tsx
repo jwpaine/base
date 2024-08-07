@@ -22,11 +22,15 @@ import { useEffect } from 'react';
 
 import { Body, Header } from '~/theme/components';
 
+import { PageContent } from "~/types";
+
+import renderPageContent from "./renderPageContent";
+
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const hostname = url.hostname == 'localhost' ? 'dreamfriday.com' : url.hostname;
   console.log('hostname:', hostname);
-  
+
   const { data } = await client.query({
     query: GET_THEME_META,
     variables: {
@@ -42,17 +46,20 @@ export const loader: LoaderFunction = async ({ request }) => {
   const siteData = data.Sites.docs[0];
   const theme: Theme = siteData.theme;
   const metadata: MetaData = siteData.meta;
+  const headerContent: PageContent = siteData.header;
 
   console.log('theme:', theme);
   console.log('metadata:', metadata)
+  console.log('headerData:', headerContent);
 
 
-  return json({ theme, metadata });
+  return json({ theme, metadata, headerContent });
 };
 
 export default function App() {
   // const { theme, metadata} = useLoaderData<LoaderData>();
   const { theme, metadata } = useLoaderData<{ theme: Theme, metadata: MetaData }>();
+  const { headerContent } = useLoaderData<{ headerContent: PageContent }>();
 
 
   // Ensure the theme object is valid before passing to ThemeProvider
@@ -72,13 +79,16 @@ export default function App() {
             <head>
               <meta charSet="utf-8" />
               <meta name="viewport" content="width=device-width,initial-scale=1" />
-              
+
               {/* <Meta /> */}
               <Links />
               {typeof document === "undefined" ? "__STYLES__" : null}
             </head>
             <Body>
-              <Header />
+              <Header>
+                {renderPageContent(headerContent)}
+              </Header>
+
               <Global
                 styles={css`
                   body {

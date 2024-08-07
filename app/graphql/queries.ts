@@ -16,6 +16,30 @@ export const GET_THEME_META = gql`
             secondary
           }
         }
+        header {
+          __typename
+          ... on Element {
+            type
+            text
+            styling
+            elements {
+              __typename
+              ... on SubElement {
+                type
+                text
+                styling
+                elements {
+                  __typename
+                  ... on TertiaryElement {
+                    type
+                    text
+                    styling
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
