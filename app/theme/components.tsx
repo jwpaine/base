@@ -36,29 +36,32 @@ export const Body = styled.body`
 
 export const Header = styled.header`
   display: flex;
-  flex-direction: row
+  flex-direction: row;
+  height: 60px;
 `;
 
 
 
 
 export interface ElementProps {
-  children?: React.ReactNode; // Allow React elements as children
-  [key: string]: string | undefined | React.ReactNode; // Extend index signature to accommodate React nodes
+  fontSize?: string;
+  margin?: string;
+  padding?: string;
+  styling?: string;
+  [key: string]: any; // Add an index signature to accommodate any additional string properties
 }
 
 
 const attributes = (props: ElementProps): string => {
   let styles = '';
-
-  // Iterate over each property in the props
-  Object.entries(props).forEach(([key, value]) => {
+  console.log("I am props", props);
+  let attributes = props.styling || {};
+  Object.entries(attributes).forEach(([key, value]) => {
     if (value) {
       // Append the CSS style for each kebab-case key
       styles += `${key}: ${value};\n`;
     }
   });
-
   return styles;
 };
 
@@ -80,3 +83,38 @@ export const Main = styled.main<ElementProps>`
   display: flex;
   flex-direction: column;
 `;
+
+export const Cloud = styled.div<ElementProps>`
+
+  width: 232px;
+  height: 92px;
+  background: #ECEFF1;
+  box-shadow: 10px 10px rgba(0,0,0,0.2);
+  border-radius: 100px;
+  position: relative;
+
+  &:after{
+   content: "";
+  position: absolute;
+  display: inline-block;
+  background: inherit;
+  border-radius: inherit;
+  width: 85px;
+  height: 92px;
+  top: -39px;
+  left: 40px;
+  }
+  &:before {
+  content: "";
+  position: relative;
+  display: inline-block;
+  background: inherit;
+  border-radius: inherit;
+  width: 103px;
+  height: 106px;
+  top: -51px;
+  left: 94px;
+  position: absolute;
+  }
+
+`

@@ -48,9 +48,11 @@ export const loader: LoaderFunction = async ({ request }) => {
   const metadata: MetaData = siteData.meta;
   const headerContent: PageContent = siteData.header;
 
-  console.log('theme:', theme);
-  console.log('metadata:', metadata)
-  console.log('headerData:', headerContent);
+  
+
+  // console.log('theme:', theme);
+  // console.log('metadata:', metadata)
+  // console.log('headerData:', headerContent);
 
 
   return json({ theme, metadata, headerContent });

@@ -1,9 +1,10 @@
-import { H1, Container, Main } from "~/theme/components";
+import { H1, Container, Main, Cloud } from "~/theme/components";
 import type { MetaData, LoaderData, PageContent, PageElement} from "~/types";
 
 const componentMap: Record<string, React.ComponentType<any>> = {
     H1: H1,
-    Container: Container
+    Container: Container,
+    Cloud: Cloud,
   };
   
   const renderPageContent = (pageContent: PageContent) => {
@@ -32,10 +33,12 @@ const componentMap: Record<string, React.ComponentType<any>> = {
         }
   
         const { styling = {}, ...rest } = element;
+
+        console.log('styling: ', JSON.stringify(styling));
   
         // Spread style properties directly into the component props
         return (
-          <Component key={index} {...styling}>
+          <Component key={index} styling={styling}>
             {renderElements((rest as PageElement).elements)}
             {rest.text}
           </Component>
@@ -56,11 +59,15 @@ const componentMap: Record<string, React.ComponentType<any>> = {
             console.error('Unknown container type:', element.type);
             return null;
           }
+
+          console.log('element: ', JSON.stringify(element));
   
           const { styling = {}, elements: childElements, ...rest } = element;
+
+          console.log('styling: ', JSON.stringify(styling));
   
           return (
-            <Component key={index} {...styling}>
+            <Component key={index} styling={styling}>
               {renderElements(childElements)}
               {rest.text}
             </Component>
