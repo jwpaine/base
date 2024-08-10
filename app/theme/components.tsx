@@ -47,7 +47,7 @@ export interface ElementProps {
   fontSize?: string;
   margin?: string;
   padding?: string;
-  styling?: string;
+  styling?: any;
   [key: string]: any; // Add an index signature to accommodate any additional string properties
 }
 
@@ -86,8 +86,8 @@ export const Main = styled.main<ElementProps>`
 
 export const Cloud = styled.div<ElementProps>`
 
-  width: 232px;
-  height: 92px;
+  width: ${(props) => props.styling.width || '232'}px;
+  height: ${(props) => props.styling.width * 0.396 || '92'}px;
   background: #ECEFF1;
   box-shadow: 10px 10px rgba(0,0,0,0.2);
   border-radius: 100px;
@@ -99,10 +99,10 @@ export const Cloud = styled.div<ElementProps>`
   display: inline-block;
   background: inherit;
   border-radius: inherit;
-  width: 85px;
-  height: 92px;
-  top: -39px;
-  left: 40px;
+  width: ${(props) => props.styling.width * 0.366 || '85'}px;
+  height: ${(props) => props.styling.width * 0.366 || '85'}px;
+  top: ${(props) => props.styling.width * -0.168 || '-39'}px;
+  left: ${(props) => props.styling.width * 0.172 || '40'}px;
   }
   &:before {
   content: "";
@@ -110,11 +110,13 @@ export const Cloud = styled.div<ElementProps>`
   display: inline-block;
   background: inherit;
   border-radius: inherit;
-  width: 103px;
-  height: 106px;
-  top: -51px;
-  left: 94px;
+  width: ${(props) => props.styling.width * 0.453 || '105'}px;
+  height: ${(props) => props.styling.width * 0.453 || '105'}px;
+  top:  ${(props) => props.styling.width * -0.25 || '-58'}px;
+  left: ${(props) => props.styling.width * 0.405 || '94'}px;
   position: absolute;
   }
+
+  ${(props) => attributes(props)} 
 
 `
