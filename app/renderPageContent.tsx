@@ -1,10 +1,18 @@
-import { H1, Container, Main, Cloud } from "~/theme/components";
+import { 
+  H1, 
+  Container, 
+  Main, 
+  Cloud,
+  P
+} from "~/theme/components";
+
 import type { MetaData, LoaderData, PageContent, PageElement} from "~/types";
 
 const componentMap: Record<string, React.ComponentType<any>> = {
     H1: H1,
     Container: Container,
     Cloud: Cloud,
+    P: P
   };
   
   const renderPageContent = (pageContent: PageContent) => {
