@@ -74,15 +74,15 @@ export const Container = styled.div<ElementProps>`
 
 export const H1 = styled.h1<ElementProps>`
   ${(props) => !props['font-size'] && 'font-size: 42px;'}
-  ${(props) => !props.styling.margin && 'margin: 0;'}
-  ${(props) => !props.styling.padding && 'padding: 0;'}
+  ${(props) => !props.styling?.margin && 'margin: 0;'}
+  ${(props) => !props.styling?.padding && 'padding: 0;'}
   ${(props) => attributes(props)} 
 `;
 
 export const P = styled.p<ElementProps>`
   ${(props) => !props.styling['font-size'] && 'font-size: 16px;'}
-  ${(props) => !props.styling.margin && 'margin: 0;'}
-  ${(props) => !props.styling.padding && 'padding: 0;'}
+  ${(props) => !props.styling?.margin && 'margin: 0;'}
+  ${(props) => !props.styling?.padding && 'padding: 0;'}
   ${(props) => attributes(props)} 
 `;
 

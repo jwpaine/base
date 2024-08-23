@@ -69,6 +69,14 @@ query GetHomeContent($domain: String!) {
                     type
                     text
                     styling
+                    elements {
+                      __typename
+                      ... on QuaternaryElement {
+                        type
+                        text
+                        styling
+                      }
+                    }
                   }
                 }
               }
