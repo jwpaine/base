@@ -54,7 +54,6 @@ export interface ElementProps {
 
 const attributes = (props: ElementProps): string => {
   let styles = '';
-  console.log("I am props", props);
   let attributes = props.styling || {};
   Object.entries(attributes).forEach(([key, value]) => {
     if (value) {
@@ -86,6 +85,9 @@ export const P = styled.p<ElementProps>`
   ${(props) => attributes(props)} 
 `;
 
+export const A = styled.a`
+  text-decoration: none;
+`;
 export const Main = styled.main<ElementProps>`
   display: flex;
   flex-direction: column;

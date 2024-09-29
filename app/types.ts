@@ -16,6 +16,7 @@ export type PageElement = {
   __typename: 'Container';
   type?: string;
   text?: string;
+  link?: string;
   styling?: object;
   
   elements: PageElement[];

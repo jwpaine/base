@@ -21,18 +21,21 @@ export const GET_THEME_META = gql`
           ... on Element {
             type
             text
+            link
             styling
             elements {
               __typename
               ... on SubElement {
                 type
                 text
+                link
                 styling
                 elements {
                   __typename
                   ... on TertiaryElement {
                     type
                     text
+                    link
                     styling
                   }
                 }
@@ -56,24 +59,28 @@ query GetHomeContent($domain: String!) {
           ... on Element {
             type
             text
+            link
             styling
             elements {
               __typename
               ... on SubElement {
                 type
                 text
+                link
                 styling
                 elements {
                   __typename
                   ... on TertiaryElement {
                     type
                     text
+                    link
                     styling
                     elements {
                       __typename
                       ... on QuaternaryElement {
                         type
                         text
+                        link
                         styling
                       }
                     }
