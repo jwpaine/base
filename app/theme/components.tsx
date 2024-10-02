@@ -35,9 +35,7 @@ export const Body = styled.body`
 `;
 
 export const Header = styled.header`
-  display: flex;
-  flex-direction: row;
-  height: 60px;
+
 `;
 
 

@@ -26,7 +26,7 @@ const renderPageContent = (pageContent: PageContent) => {
 
   if (!pageContent) {
     console.error('Invalid page content:', pageContent);
-    return <main>No content available</main>;
+    return null;
   }
 
   const renderElements = (elements: PageElement[]) => {

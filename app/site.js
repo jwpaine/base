@@ -16,11 +16,11 @@ const siteData = {
         {
           "type": "Container",
           "styling": {
-          "background": "url(https://plus.unsplash.com/premium_photo-1667338341609-829a2fb99bfc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)",
+          "background": "url(https://upload.wikimedia.org/wikipedia/commons/c/ca/New_Bern_Historic_District.JPG)",
           "background-size": "cover",
           "background-position": "center",
-          "width": "100%",
-            "height": "500px"
+        
+          "height": "100vh"
           },
           "elements": [
             {
@@ -29,7 +29,7 @@ const siteData = {
               "styling": {
                 "display": "flex",
                 "flex-direction": "column",
-                "align-items": "center",
+                "justify-content": "flex-start",
                 "height": "100%",
                 "width": "100%",
                 "background": "rgba(0,0,0,0.7)"
@@ -39,27 +39,54 @@ const siteData = {
                   "type": "Container",
                   "styling": {
                     "display": "flex",
+                    "justify-content": "flex-start",
+                    "width": "100%",
+                    "height": "60px",
+                    
+                    
+                  },
+                  "elements": [
+                    {
+                      "type": "P",
+                      "text": "Dream Friday",
+                      "link": "/",
+                      "styling": {
+                        "color": "white",
+                        "text-decoration": "none",
+                        "font-weight": "bold",
+                        "font-size": "20px",
+                        "margin": "0px 20px"
+                      },
+                      "elements": []
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "styling": {
+                    "display": "flex",
                     "flex-direction": "column",
                     "max-width": "600px",
                     "align-items": "flex-start",
-                    "padding": "0px 20px 0px 20px",
-                    "position": "relative",
-                    "bottom": "100px"
+                    "margin-top" : "35vh",
+                  
                   },
                   "elements": [
                     {
                       "type": "H1",
                       "text": "Simple Is Better",
                       "styling": {
-                        "color": "white"
+                        "color": "white",
+                        "font-size": "65px",
                       }
                     },
                     {
                       "type": "P",
-                      "text": "We built a platform from the ground up to power ultra low-cost custom …",
+                      "text": "We built a platform from the ground up to power ultra low-cost custom websites. We call them micro frontends.",
                       "styling": {
                         "margin-top": "10px",
-                        "color": "white"
+                        "color": "white",
+                        "font-size": "20px"
                       }
                     },
                     {
@@ -67,7 +94,8 @@ const siteData = {
                       "text": "Tiny sites. Big Impact.",
                       "styling": {
                         "margin-top": "18px",
-                        "color": "white"
+                        "color": "white",
+                        "font-size": "20px"
                       }
                     }
                   ]
@@ -79,7 +107,7 @@ const siteData = {
       ]
     },
   
-    "header": [
+    "headerX": [
         {
           "type": "Container",
           "styling": {
