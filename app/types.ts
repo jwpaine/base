@@ -17,6 +17,7 @@ export type PageElement = {
   text?: string;
   link?: string;
   styling?: object;
+  id?: string;
   
   elements: PageElement[];
 };

@@ -47,19 +47,19 @@ const renderPageContent = (pageContent: PageContent) => {
         return null;
       }
 
-      const { styling = {}, link, ...rest } = element;
+      const { id, styling = {}, link, ...rest } = element;
 
       // Spread style properties directly into the component props
       return (
         link ? (
           <A key={index} href={link}>
-            <Component key={index} styling={styling}>
+            <Component key={index} styling={styling} id={id}>
               {renderElements((rest as PageElement).elements)}
               {rest.text}
             </Component>
           </A>
         ) : (
-          <Component key={index} styling={styling}>
+          <Component key={index} styling={styling} id={id}>
             {renderElements((rest as PageElement).elements)}
             {rest.text}
           </Component>
@@ -84,19 +84,19 @@ const renderPageContent = (pageContent: PageContent) => {
 
 
 
-        const { styling = {}, link, elements: childElements, ...rest } = element;
+        const { id, styling = {}, link, elements: childElements, ...rest } = element;
 
 
         return (
           link ? (
             <A key={index} href={link}>
-              <Component key={index} styling={styling}>
+              <Component key={index} styling={styling} id={id}>
                 {renderElements(childElements)}
                 {rest.text}
               </Component>
             </A>
           ) : (
-            <Component key={index} styling={styling}>
+            <Component key={index} styling={styling} id={id}>
               {renderElements(childElements)}
               {rest.text}
             </Component>

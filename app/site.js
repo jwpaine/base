@@ -14,6 +14,7 @@ const siteData = {
     "pages": {
       "home": [
         {
+          "id" : "hero",
           "type": "Container",
           "styling": {
           "background": "url(https://upload.wikimedia.org/wikipedia/commons/c/ca/New_Bern_Historic_District.JPG)",
@@ -68,7 +69,8 @@ const siteData = {
                     "flex-direction": "column",
                     "max-width": "600px",
                     "align-items": "flex-start",
-                    "margin-top" : "35vh",
+                    "margin-top" : "15vh",
+                    "padding" : "0px 20px",
                   
                   },
                   "elements": [
@@ -77,16 +79,17 @@ const siteData = {
                       "text": "Simple Is Better",
                       "styling": {
                         "color": "white",
-                        "font-size": "65px",
+                        "font-size": "77px",
+                        "line-height": "1.1"
                       }
                     },
                     {
                       "type": "P",
-                      "text": "We built a platform from the ground up to power ultra low-cost custom websites. We call them micro frontends.",
+                      "text": "Founded in New Bern, NC, we built a platform from the ground up to power ultra low-cost custom websites for growing businesses in our town and beyond. We call them micro frontends.",
                       "styling": {
-                        "margin-top": "10px",
+                        "margin-top": "20px",
                         "color": "white",
-                        "font-size": "20px"
+                        "font-size": "18px"
                       }
                     },
                     {
@@ -95,7 +98,7 @@ const siteData = {
                       "styling": {
                         "margin-top": "18px",
                         "color": "white",
-                        "font-size": "20px"
+                        "font-size": "18px"
                       }
                     }
                   ]
