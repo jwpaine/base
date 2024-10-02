@@ -63,10 +63,14 @@ export default function App() {
               </Header>
               <Global
                 styles={css`
+                  html {
+                    scroll-behavior: smooth;
+                  }
                   body {
                     padding: 0;
                     margin: 0;
-                  }
+                  },
+                  
                 `}
               />
               <Outlet />

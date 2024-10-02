@@ -85,7 +85,7 @@ const siteData = {
                     },
                     {
                       "type": "P",
-                      "text": "Founded in New Bern, NC, we built a platform from the ground up to power ultra low-cost custom websites for growing businesses in our town and beyond. We call them micro frontends.",
+                      "text": "Founded in New Bern, NC, our platform powers ultra low-cost custom websites for growing businesses in our town and beyond. We call them micro frontends.",
                       "styling": {
                         "margin-top": "20px",
                         "color": "white",
@@ -100,6 +100,20 @@ const siteData = {
                         "color": "white",
                         "font-size": "18px"
                       }
+                    },
+                    {
+                      "type": "Button",
+                      "text": "Learn More",
+                      "link": "#about",
+                      "styling" : {
+                        "border": "1px solid white",
+                        "background": "transparent",
+                        "color": "white",
+                        "padding": "10px 20px",
+                        "margin-top": "30px",
+                        "cursor": "pointer",
+                        "font-size": "18px"
+                      }
                     }
                   ]
                 }
@@ -107,6 +121,15 @@ const siteData = {
             }
           ]
         },
+        {
+          "id" : "about",
+          "type" : "Container",
+          "styling": {
+            "background": "white",
+            "padding": "20px 0px",
+            "text-align": "center"
+          },
+        }
       ]
     },
   

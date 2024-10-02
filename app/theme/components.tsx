@@ -83,6 +83,10 @@ export const P = styled.p<ElementProps>`
   ${(props) => attributes(props)} 
 `;
 
+export const Button = styled.button<ElementProps>`
+  ${(props) => attributes(props)} 
+`;
+
 export const A = styled.a`
   text-decoration: none;
 `;

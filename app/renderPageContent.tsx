@@ -4,7 +4,8 @@ import {
   Main,
   Cloud,
   P,
-  A
+  A,
+  Button
 } from "~/theme/components";
 
 import type { MetaData, LoaderData, PageContent, PageElement } from "~/types";
@@ -13,7 +14,8 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   H1: H1,
   Container: Container,
   Cloud: Cloud,
-  P: P
+  P: P,
+  Button: Button,
 };
 
 const renderPageContent = (pageContent: PageContent) => {
