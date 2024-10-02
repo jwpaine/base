@@ -1,3 +1,4 @@
+// root.tsx
 import {
   Links,
   LiveReload,
@@ -7,97 +8,65 @@ import {
   ScrollRestoration,
   useLoaderData
 } from "@remix-run/react";
-import type { MetaFunction } from "@remix-run/node";
 import type { LoaderFunction } from "@remix-run/node";
-import type { LoaderData, Theme, MetaData } from '~/types'; // Importing Theme type
+import type { Theme, MetaData, SiteData } from '~/types';
 import { json } from "@remix-run/node";
-import client from '~/graphql/client'; // Import the updated client
-import { GET_THEME_META } from '~/graphql/queries';
 
 import createCache from "@emotion/cache";
 import { CacheProvider, ThemeProvider } from "@emotion/react";
 import { Global, css } from "@emotion/react";
-import { ApolloProvider } from '@apollo/client/react/context/index.js';
-import { useEffect } from 'react';
 
 import { Body, Header } from '~/theme/components';
 
-import { PageContent } from "~/types";
-
 import renderPageContent from "./renderPageContent";
+
+import siteData from '~/site'; // Import the entire siteData
+
+// Import the SiteDataProvider and types
+import { SiteDataProvider } from '~/context/SiteDataContext';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
-  const hostname = url.hostname == 'localhost' ? 'dreamfriday.com' : url.hostname;
+  const hostname = url.hostname === 'localhost' ? 'dreamfriday.com' : url.hostname;
   console.log('hostname:', hostname);
 
-  const { data } = await client.query({
-    query: GET_THEME_META,
-    variables: {
-      domain: hostname,
-    },
-  });
-
-
-  if (!data || !data.Sites || !data.Sites.docs || data.Sites.docs.length === 0) {
-    throw new Error('No data found for the given domain');
-  }
-
-  const siteData = data.Sites.docs[0];
-  const theme: Theme = siteData.theme;
-  const metadata: MetaData = siteData.meta;
-  const headerContent: PageContent = siteData.header;
-
-  
-
-  // console.log('theme:', theme);
-  // console.log('metadata:', metadata)
-  // console.log('headerData:', headerContent);
-
-
-  return json({ theme, metadata, headerContent });
+  // Return the entire siteData
+  return json(siteData);
 };
 
 export default function App() {
-  // const { theme, metadata} = useLoaderData<LoaderData>();
-  const { theme, metadata } = useLoaderData<{ theme: Theme, metadata: MetaData }>();
-  const { headerContent } = useLoaderData<{ headerContent: PageContent }>();
+  // Use useLoaderData to get the entire siteData
+  const siteData = useLoaderData<SiteData>();
 
+  // Extract theme and header from siteData
+  const { theme, header } = siteData;
 
   // Ensure the theme object is valid before passing to ThemeProvider
   if (!theme || typeof theme !== 'object') {
     throw new Error('Invalid theme object');
   }
 
-  useEffect(() => {
-    document.title = metadata.title;
-  }, [metadata.title]);
-
   return (
     <CacheProvider value={createCache({ key: 'custom' })}>
-      <ApolloProvider client={client}>
-        <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <SiteDataProvider siteData={siteData}>
           <html lang="en">
             <head>
               <meta charSet="utf-8" />
               <meta name="viewport" content="width=device-width,initial-scale=1" />
-
-              {/* <Meta /> */}
               <Links />
               {typeof document === "undefined" ? "__STYLES__" : null}
             </head>
             <Body>
               <Header>
-                {renderPageContent(headerContent)}
+                {renderPageContent(header)}
               </Header>
-
               <Global
                 styles={css`
                   body {
                     padding: 0;
                     margin: 0;
                   }
-                  
                 `}
               />
               <Outlet />
@@ -106,8 +75,8 @@ export default function App() {
               {process.env.NODE_ENV === "development" && <LiveReload />}
             </Body>
           </html>
-        </ThemeProvider>
-      </ApolloProvider>
+        </SiteDataProvider>
+      </ThemeProvider>
     </CacheProvider>
   );
 }

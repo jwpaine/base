@@ -13,7 +13,6 @@ export type MetaData = {
 };
 
 export type PageElement = {
-  __typename: 'Container';
   type?: string;
   text?: string;
   link?: string;
@@ -29,3 +28,12 @@ export type LoaderData = {
   metadata: MetaData;
   pageContent: PageContent;
 };
+
+export interface SiteData {
+  meta: MetaData;
+  theme: Theme;
+  pages: {
+    home: PageElement[];
+  };
+  header: PageElement[];
+}
