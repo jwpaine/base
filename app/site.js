@@ -43,8 +43,6 @@ const siteData = {
                     "justify-content": "flex-start",
                     "width": "100%",
                     "height": "60px",
-                    
-                    
                   },
                   "elements": [
                     {
@@ -69,7 +67,7 @@ const siteData = {
                     "flex-direction": "column",
                     "max-width": "600px",
                     "align-items": "flex-start",
-                    "margin-top" : "15vh",
+                    "margin-top" : "25vh",
                     "padding" : "0px 20px",
                   
                   },
@@ -127,7 +125,8 @@ const siteData = {
           "styling": {
             "background": "white",
             "padding": "20px 0px",
-            "text-align": "center"
+            "text-align": "center",
+            "height": "100vh"
           },
         }
       ]
