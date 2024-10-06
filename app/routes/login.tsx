@@ -3,60 +3,57 @@ import { ActionFunction, json, redirect } from "@remix-run/node";
 import { useActionData, Form } from "@remix-run/react";
 import React from "react";
 
-import { getSession, commitSession } from "~/session.server";
+import { getSession, commitSession, login, resetPassword } from "~/auth.server";
 
 interface ActionData {
     error?: string;
     success?: boolean;
+    message?: string;
   }
 
 export let action: ActionFunction = async ({ request }) => {
+
   const formData = await request.formData();
   const email = formData.get("email");
-  const password = formData.get("password");
+  const reset = formData.get("reset");
 
-  const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN;
+  if(reset) {
+    console.log("resetting password for: ", email)
+    // send reset email
+    return await resetPassword(email as string);
 
-  console.log("logging in: ", email)
-
-  const response = await fetch(`${AUTH0_DOMAIN}/oauth/token`, {
-
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      grant_type: "password",
-      client_id: process.env.AUTH0_CLIENT_ID,
-      client_secret: process.env.AUTH0_CLIENT_SECRET,
-      username: email,
-      password,
-      scope: "openid profile email",
-    }),
-  });
-
-  const result = await response.json();
-  if (response.ok) {
-    // If login is successful, store the access token in the session
-    let session = await getSession(request.headers.get("Cookie"));
-    session.set("accessToken", result.access_token);
-    session.set("email", email); // Store the email in the session
-
-
-    return redirect("/", {
-      headers: {
-        "Set-Cookie": await commitSession(session),
-      },
-    });
-  } else {
-    // Return error data if login failed
-    return json<ActionData>({ error: result.error_description || "Failed to log in" }, { status: 400 });
   }
+
+  const password = formData.get("password");
+  // log user in using login function:
+  const result = await login(email as string, password as string, request);
+
+  return result
+
 };
 
 export default function Login() {
     const actionData = useActionData<ActionData>();
+    const [resetPassword, setResetPassword] = React.useState(false);
 
+  if(resetPassword) {
+    return (
+      <div>
+        <h1>Reset Password</h1>
+        <Form method="post">
+          <div>
+            <label htmlFor="email">Email:</label>
+            <input type="email" name="email" required />
+            <input type="hidden" name="reset" value="reset" />
+          </div>
+          <button type="submit">Reset Password</button>
+        </Form>
+        <button onClick={() => setResetPassword(false)}>Cancel</button>
+        {actionData?.error && <p style={{ color: "red" }}>{actionData.error}</p>}
+        {actionData?.message && <p>{actionData.message}</p>}
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -72,6 +69,7 @@ export default function Login() {
         </div>
         <button type="submit">Login</button>
       </Form>
+      <button onClick={() => setResetPassword(true)}>Reset Password</button>
       {actionData?.error && <p style={{ color: "red" }}>{actionData.error}</p>}
     </div>
   );

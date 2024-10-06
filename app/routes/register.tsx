@@ -2,6 +2,7 @@
 import { ActionFunction, json } from "@remix-run/node";
 import { useActionData, Form } from "@remix-run/react";
 import React from "react";
+import { register } from "~/auth.server";
 // Define the type for the action data
 interface ActionData {
   error?: string;
@@ -13,27 +14,9 @@ export let action: ActionFunction = async ({ request }) => {
   const email = formData.get("email");
   const password = formData.get("password");
 
-  const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN;
+  const result = await register(email as string, password as string, request);
 
-  const response = await fetch(`${AUTH0_DOMAIN}/dbconnections/signup`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      client_id: process.env.AUTH0_CLIENT_ID,
-      email,
-      password,
-      connection: "Username-Password-Authentication",
-    }),
-  });
-
-  const result = await response.json();
-  if (response.ok) {
-    return json({ success: true });
-  } else {
-    return json({ error: result.description || "Failed to register" }, { status: 400 });
-  }
+  return result;
 };
 
 export default function Register() {

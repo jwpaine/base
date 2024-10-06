@@ -1,7 +1,7 @@
 // app/routes/protected.tsx
 import { LoaderFunction, redirect, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { getSession } from "~/session.server";
+import { getSession } from "~/auth.server";
 
 import React from "react";
 
