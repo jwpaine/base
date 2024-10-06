@@ -3,6 +3,8 @@ import { LoaderFunction, redirect, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getSession } from "~/auth.server";
 
+import { queryDb } from "~/db.server";
+
 import React from "react";
 
 interface LoaderData {
@@ -18,6 +20,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   if (!accessToken) {
     return redirect("/login");
   }
+
+  // test query
+  const sites = await queryDb('SELECT * FROM sites');
+  console.log(sites);
 
   // Continue to render the protected page
   return json<LoaderData>({ email });
