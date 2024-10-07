@@ -8,7 +8,7 @@ import {
 } from "@remix-run/react";
 
 import { getSession } from "~/auth.server";
-import {getSitesForOwner, getSiteData } from "~/models/site.server"
+import {getSitesForOwner, getSiteData, updateSiteData } from "~/models/site.server"
 
 import {Editor} from "~/theme/components"
 
@@ -45,19 +45,26 @@ export async function action({ request, params }: ActionArgs) {
 
   const formData = await request.formData();
 
-  const siteData = formData.get("siteData");
+  const siteData = formData.get("siteData")
   const domain = params.site as string
 
-  console.log("received site data", siteData)
+  console.log("update site data for ", domain)
 
   // validate that siteData is valid JSON:
+  let data = null;
   try {
-    JSON.parse(siteData as string)
+    data = JSON.parse(siteData as string)
   } catch (e) {
-    return json({success: false, errors: e})
+    return json({success: false, errors: ["Invalid JSON"]})
   }
 
-  return json({'success': true, 'errors' : null})
+
+  if (data) {
+    const r = await updateSiteData(domain, email, data)
+
+    return json({'success': true, 'errors' : null})
+  }
+
 
 }
 
@@ -72,7 +79,6 @@ export default function Site() {
     <div>
       <h1>{domain}</h1>
      
-
       <site.Form method="post" action={`/admin/${domain}`}>
         <Editor 
           type="textarea"

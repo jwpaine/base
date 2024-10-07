@@ -33,3 +33,20 @@ export async function getSiteData(domain: string, email: string) {
       client.release();
     }
   }
+
+export async function updateSiteData(domain: string, email: string, data: JSON) {
+    console.log("updating site data for user: ", email)
+    const client = await getDbClient();
+    try {
+      const res = await client.query(
+        `UPDATE sites SET data = $1 WHERE domain = $2 AND owner = $3`,
+        [data, domain, email]
+      );
+      return res.rows
+    } catch (err) {
+      console.error("Error updating data", err);
+      throw err;
+    } finally {
+      client.release();
+    }
+  }
