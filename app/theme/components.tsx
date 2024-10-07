@@ -95,6 +95,10 @@ export const Main = styled.main<ElementProps>`
   flex-direction: column;
 `;
 
+export const Editor = styled.textarea<ElementProps>`
+  height: 500px;
+`
+
 export const Cloud = styled.div<ElementProps>`
 
   width: ${(props) => props.styling.width || '232'}px;

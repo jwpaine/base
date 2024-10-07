@@ -32,6 +32,7 @@
     "pg": "^8.13.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-json-editor-ajrm": "^2.5.14",
     "remix-auth": "^3.7.0",
     "remix-auth-auth0": "^1.10.0"
   },
