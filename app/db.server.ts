@@ -30,17 +30,3 @@ export async function getDbClient() {
     throw new Error('Database connection failed');
   }
 }
-
-// Optionally, export a function to query the database directly
-export async function queryDb(query: string, params?: any[]) {
-  const client = await getDbClient();
-  try {
-    const res = await client.query(query, params);
-    return res.rows;
-  } catch (err) {
-    console.error('Error executing query:', err);
-    throw err;
-  } finally {
-    client.release(); // Release the client back to the pool
-  }
-}

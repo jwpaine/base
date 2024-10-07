@@ -20,19 +20,21 @@ import { Body, Header } from '~/theme/components';
 
 import renderPageContent from "./renderPageContent";
 
-import siteData from '~/site'; // Import the entire siteData
+import { getSiteData } from '~/models/site.server';
 
 // Import the SiteDataProvider and types
 import { SiteDataProvider } from '~/context/SiteDataContext';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
-  const hostname = url.hostname === 'localhost' ? 'dreamfriday.com' : url.hostname;
-  console.log('hostname:', hostname);
+  const domain = url.hostname === 'localhost' ? 'dreamfriday.com' : url.hostname;
+  console.log('domain:', domain);
+
+  const siteData = await getSiteData(domain);
 
   // Return the entire siteData
   return json(siteData);
-};
+}; 
 
 export default function App() {
   // Use useLoaderData to get the entire siteData
@@ -70,7 +72,6 @@ export default function App() {
                     padding: 0;
                     margin: 0;
                   },
-                  
                 `}
               />
               <Outlet />

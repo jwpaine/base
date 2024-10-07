@@ -17,13 +17,13 @@ export async function getSitesForOwner(email: string) {
   }
 }
 
-export async function getSiteData(domain: string, email: string) {
-    console.log("getting site data for user: ", email)
+export async function getSiteData(domain: string) {
+    console.log("getting site data for domain: ", domain)
     const client = await getDbClient();
     try {
       const res = await client.query(
-        `SELECT data FROM sites WHERE domain = $1 AND owner = $2`,
-        [domain, email]
+        `SELECT data FROM sites WHERE domain = $1`,
+        [domain]
       );
       return res.rows[0].data;
     } catch (err) {

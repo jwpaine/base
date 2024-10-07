@@ -32,7 +32,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const email = session.get("email") as string
   // grab ?site= query param
   const domain = params.site as string
-  const siteData = await getSiteData(domain, email) as JSON
+  const siteData = await getSiteData(domain) as JSON
   // Continue to render the protected page
   return json({ siteData, domain});
 };
