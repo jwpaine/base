@@ -5,6 +5,7 @@ import type { LinksFunction, LoaderFunction } from "@remix-run/node";
 import { getSiteData } from '~/models/site.server';
 import { SiteDataProvider } from '~/context/SiteDataContext';
 import type { SiteData } from '~/types';
+import renderPageContent from "./renderPageContent";
 
 
 export const links: LinksFunction = () => [
@@ -28,6 +29,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Root() {
   const siteData = useLoaderData<SiteData>();
 
+  const header = siteData?.header;
+
   return (
    
       <html lang="en">
@@ -38,6 +41,7 @@ export default function Root() {
           <Links />
         </head>
         <body>
+          {header && renderPageContent(header)}
           <SiteDataProvider siteData={siteData}>
             <Outlet />
           </SiteDataProvider>

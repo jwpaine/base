@@ -1,53 +1,8 @@
 import React from "react";
 import { useNavigate, Link } from "@remix-run/react";
-import { h1Style, containerStyle, pStyle, buttonStyle } from './styles.css';
+import { H1, Container, P, Button, Section, Header } from './theme/elements';
 
-// Helper function to ensure that styling is always an object
-const ensureStyleObject = (styling: any): React.CSSProperties => {
-  if (typeof styling !== 'object' || styling === null) {
-    return {};
-  }
 
-  // Check if all keys are in camelCase
-  for (const key in styling) {
-    if (styling.hasOwnProperty(key)) {
-      // If the key contains a hyphen (kebab-case), return {}
-      if (key.includes('-')) {
-        return {};
-      }
-    }
-  }
-
-  return styling;
-};
-
-// H1 component
-const H1 = ({ id, styling, children }: { id?: string; styling?: React.CSSProperties; children: React.ReactNode }) => {
-  const style = ensureStyleObject(styling); // Ensure styling is an object
-  return <h1 id={id} className={h1Style} style={style}>{children}</h1>;
-};
-
-// Container component
-const Container = ({ id, styling, children }: { id?: string; styling?: React.CSSProperties; children: React.ReactNode }) => {
-  const style = ensureStyleObject(styling); // Ensure styling is an object
-  return <div id={id} className={containerStyle} style={style}>{children}</div>;
-};
-
-// Paragraph component
-const P = ({ id, styling, children }: { id?: string; styling?: React.CSSProperties; children: React.ReactNode }) => {
-  const style = ensureStyleObject(styling); // Ensure styling is an object
-  return <p id={id} className={pStyle} style={style}>{children}</p>;
-};
-
-// Button component
-const Button = ({ id, styling, children, onClick }: { id?: string; styling?: React.CSSProperties; children: React.ReactNode; onClick?: () => void }) => {
-  const style = ensureStyleObject(styling); // Ensure styling is an object
-  return (
-    <button id={id} className={buttonStyle} style={style} onClick={onClick}>
-      {children}
-    </button>
-  );
-};
 
 // Map the element type to the corresponding functional component
 const componentMap: Record<string, React.ComponentType<any>> = {
@@ -56,6 +11,8 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   Button,
   Container,
   Div: Container,
+  Section,
+  Header
 };
 
 const renderPageContent = (pageContent: any) => {
