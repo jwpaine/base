@@ -6,13 +6,6 @@ import { getSiteData } from '~/models/site.server';
 import { SiteDataProvider } from '~/context/SiteDataContext';
 import type { SiteData } from '~/types';
 
-// Emotion-related imports
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
-
-
-// Create Emotion cache (used in both client and server)
-export const emotionCache = createCache({ key: 'css' });
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -36,15 +29,13 @@ export default function Root() {
   const siteData = useLoaderData<SiteData>();
 
   return (
-    <CacheProvider value={emotionCache}>
+   
       <html lang="en">
         <head>
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <Meta />
           <Links />
-          {/* Placeholder for Emotion styles that will be replaced during SSR */}
-          {typeof document === "undefined" ? "__STYLES__" : null}
         </head>
         <body>
           <SiteDataProvider siteData={siteData}>
@@ -54,6 +45,5 @@ export default function Root() {
           <Scripts />
         </body>
       </html>
-    </CacheProvider>
   );
 }
